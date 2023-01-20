@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -65,4 +66,8 @@ fun Context.checkUserPermissionGranted(permission: String): Boolean {
 fun Context.checkStoragePermission(): Boolean {
     val minSdk29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
     return checkUserPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE) || minSdk29
+}
+
+fun Context.showToast(message: String, duration: Int? = null) {
+    Toast.makeText(this, message, duration ?: Toast.LENGTH_SHORT).show()
 }

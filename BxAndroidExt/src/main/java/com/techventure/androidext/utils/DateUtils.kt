@@ -14,8 +14,8 @@ import kotlin.math.abs
 
 
 fun getCurrentDateStringFormat(): String? {
-    val dateFormat =  SimpleDateFormat(DD_dot_MM_dot_YYYY)
-    return  dateFormat.format(getCurrentDeviceTime())
+    val dateFormat = SimpleDateFormat(DD_dot_MM_dot_YYYY)
+    return dateFormat.format(getCurrentDeviceTime())
 }
 
 fun getCurrentDeviceTime(): Date {
@@ -24,8 +24,8 @@ fun getCurrentDeviceTime(): Date {
 
 fun getTimerText(time: Double): String? {
     getTimeDetails(time).apply {
-        return get(ExtEnums.SECONDS.key)?.let { seconds->
-            get(ExtEnums.MINUTES.key)?.let {minutes->
+        return get(ExtEnums.SECONDS.key)?.let { seconds ->
+            get(ExtEnums.MINUTES.key)?.let { minutes ->
                 get(ExtEnums.HOURS.key)?.let { hours ->
                     formatTime(seconds, minutes, hours)
                 }
@@ -36,7 +36,7 @@ fun getTimerText(time: Double): String? {
 
 fun formatTime(seconds: Int, minutes: Int, hours: Int): String {
     DateConstants.apply {
-        return  String.format(TIMER_DISPLAY_FORMAT, hours) + ":" +
+        return String.format(TIMER_DISPLAY_FORMAT, hours) + ":" +
                 String.format(TIMER_DISPLAY_FORMAT, minutes) + ":" +
                 String.format(TIMER_DISPLAY_FORMAT, seconds)
     }
@@ -44,8 +44,8 @@ fun formatTime(seconds: Int, minutes: Int, hours: Int): String {
 
 fun getReportTimeText(time: Double): String? {
     getTimeDetails(time).apply {
-        return get(ExtEnums.SECONDS.key)?.let {seconds->
-            get(ExtEnums.MINUTES.key)?.let {minutes->
+        return get(ExtEnums.SECONDS.key)?.let { seconds ->
+            get(ExtEnums.MINUTES.key)?.let { minutes ->
                 get(ExtEnums.HOURS.key)?.let { hours ->
                     formatTimeWithDetails(seconds, minutes, hours)
                 }
@@ -56,13 +56,13 @@ fun getReportTimeText(time: Double): String? {
 
 fun formatTimeWithDetails(seconds: Int, minutes: Int, hours: Int): String {
     DateConstants.apply {
-        return  String.format(TIMER_DETAILS_DISPLAY_FORMAT, hours) + "h " +
+        return String.format(TIMER_DETAILS_DISPLAY_FORMAT, hours) + "h " +
                 String.format(TIMER_DISPLAY_FORMAT, minutes) + "m " +
-                String.format(TIMER_DISPLAY_FORMAT, seconds)+ "s"
+                String.format(TIMER_DISPLAY_FORMAT, seconds) + "s"
     }
 }
 
-private fun getTimeDetails(time: Double):Map<String,Int>{
+private fun getTimeDetails(time: Double): Map<String, Int> {
     val rounded = Math.round(time).toInt()
     val seconds = rounded % 86400 % 3600 % 60
     val minutes = rounded % 86400 % 3600 / 60
@@ -75,18 +75,18 @@ private fun getTimeDetails(time: Double):Map<String,Int>{
 }
 
 @SuppressLint("SimpleDateFormat")
-fun timeDifference(startDateTime: Date?, endDateTime: Date?):Long{
+fun timeDifference(startDateTime: Date?, endDateTime: Date?): Long {
     val sdf = SimpleDateFormat(DateConstants.TIME_DIFFERENCE_TIME_FORMAT)
 
     val date1 = sdf.parse(sdf.format(startDateTime))
     val date2 = sdf.parse(sdf.format(endDateTime))
 
-    return  abs(date1.time - date2.time)
+    return abs(date1.time - date2.time)
 }
 
-private fun getTimeDifference(mills: Long):Map<String,Int>{
+private fun getTimeDifference(mills: Long): Map<String, Int> {
     val hours = (mills / (1000 * 60 * 60)).toInt()
-    val minutes = (mills / (1000 * 60)).toInt()% 60
+    val minutes = (mills / (1000 * 60)).toInt() % 60
     val seconds = ((mills / 1000).toInt() % 60)
     return mapOf(
         ExtEnums.SECONDS.key to seconds,
@@ -95,10 +95,10 @@ private fun getTimeDifference(mills: Long):Map<String,Int>{
     )
 }
 
-fun timeDifferenceString(mills: Long):String?{
+fun timeDifferenceString(mills: Long): String? {
     getTimeDifference(mills).apply {
-        return get(ExtEnums.SECONDS.key)?.let {seconds->
-            get(ExtEnums.MINUTES.key)?.let {minutes->
+        return get(ExtEnums.SECONDS.key)?.let { seconds ->
+            get(ExtEnums.MINUTES.key)?.let { minutes ->
                 get(ExtEnums.HOURS.key)?.let { hours ->
                     formatTime(seconds, minutes, hours)
                 }
@@ -107,10 +107,10 @@ fun timeDifferenceString(mills: Long):String?{
     }
 }
 
-fun timeDetailsDifferenceString(mills: Long):String?{
+fun timeDetailsDifferenceString(mills: Long): String? {
     getTimeDifference(mills).apply {
-        return get(ExtEnums.SECONDS.key)?.let {seconds->
-            get(ExtEnums.MINUTES.key)?.let {minutes->
+        return get(ExtEnums.SECONDS.key)?.let { seconds ->
+            get(ExtEnums.MINUTES.key)?.let { minutes ->
                 get(ExtEnums.HOURS.key)?.let { hours ->
                     formatTimeWithDetails(seconds, minutes, hours)
                 }
@@ -120,9 +120,14 @@ fun timeDetailsDifferenceString(mills: Long):String?{
 }
 
 @SuppressLint("SimpleDateFormat")
-fun getTimeConcatString(dateTime: Date?, hour: String?, mint: String?,locale: String?="en"):Map<String, Any>{
+fun getTimeConcatString(
+    dateTime: Date?,
+    hour: String?,
+    mint: String?,
+    locale: String? = "en"
+): Map<String, Any> {
     DateConstants.apply {
-        val dateString = dateTime.formatDateIntoString(YYYY_MM__DD,false)
+        val dateString = dateTime.formatDateIntoString(YYYY_MM__DD, false)
         val time = "$dateString $hour:$mint"
         val date = SimpleDateFormat(YYYY_MM_DD_HH_MM, Locale(locale, "")).parse(
             time
@@ -135,34 +140,41 @@ fun getTimeConcatString(dateTime: Date?, hour: String?, mint: String?,locale: St
     }
 }
 
-fun Date?.addTime(dateType: Int, value: Int):Date{
-    val calendar  = Calendar.getInstance()
+fun Date?.addTime(dateType: Int, value: Int): Date {
+    val calendar = Calendar.getInstance()
     calendar.time = this
     calendar.add(dateType, value)
     return calendar.time
 }
 
-fun Calendar?.addCalender(dateType: Int, value: Int):Calendar?{
+fun Calendar?.addCalender(dateType: Int, value: Int): Calendar? {
     this?.add(dateType, value)
     return this
 }
 
-fun Date?.toCalendar():Calendar?{
+fun Date?.toCalendar(): Calendar? {
     return Calendar.getInstance().apply {
         time = this@toCalendar
     }
 }
 
-fun Date?.getDateStringWithoutTimeZone():String?{
-    return formatDateIntoString(UTC_PATTERN_WITHOUT_ZONE).getDateTimeFromDateString(UTC_PATTERN_WITHOUT_ZONE)?.formatDateIntoString(UTC_PATTERN_WITHOUT_ZONE)
+fun Date?.getDateStringWithoutTimeZone(): String? {
+    return formatDateIntoString(UTC_PATTERN_WITHOUT_ZONE).getDateTimeFromDateString(
+        UTC_PATTERN_WITHOUT_ZONE
+    )?.formatDateIntoString(UTC_PATTERN_WITHOUT_ZONE)
 }
 
-fun Date?.formatDateIntoString(dateFormatter:String,shouldAddLocale:Boolean = true,enableTimeZone:Boolean=false,locale: String?="en") : String {
+fun Date?.formatDateIntoString(
+    dateFormatter: String,
+    shouldAddLocale: Boolean = true,
+    enableTimeZone: Boolean = false,
+    locale: String? = "en"
+): String {
     val formatter = if (shouldAddLocale) SimpleDateFormat(dateFormatter, Locale(locale, ""))
     else SimpleDateFormat(dateFormatter)
 
-    if (enableTimeZone){
-        formatter.timeZone =  TimeZone.getTimeZone(DateConstants.UTC)
+    if (enableTimeZone) {
+        formatter.timeZone = TimeZone.getTimeZone(DateConstants.UTC)
     }
     return try {
         formatter.format(this)
@@ -172,15 +184,15 @@ fun Date?.formatDateIntoString(dateFormatter:String,shouldAddLocale:Boolean = tr
 }
 
 fun String?.getDateTimeFromDateString(
-    dateFormatter:String,
-    shouldAddLocale:Boolean = true,
-    timeZoneEnable:Boolean=false,
-    locale: String?="en"
+    dateFormatter: String,
+    shouldAddLocale: Boolean = true,
+    timeZoneEnable: Boolean = false,
+    locale: String? = "en"
 ): Date? {
     val dateFormat = if (shouldAddLocale) SimpleDateFormat(
         dateFormatter,
         Locale(locale, "")
-    )else SimpleDateFormat(dateFormatter)
+    ) else SimpleDateFormat(dateFormatter)
     if (timeZoneEnable) dateFormat.timeZone = TimeZone.getTimeZone(DateConstants.UTC)
     return try {
         dateFormat.parse(this)
@@ -191,9 +203,9 @@ fun String?.getDateTimeFromDateString(
 
 @SuppressLint("SimpleDateFormat")
 fun Date?.convertDateToTimeString(
-    dateFormatter:String,
-    timeFormatter:String
-):String{
+    dateFormatter: String,
+    timeFormatter: String
+): String {
     DateConstants.apply {
         val dateString = this@convertDateToTimeString.formatDateIntoString(dateFormatter)
         val format = SimpleDateFormat(dateFormatter)
@@ -275,12 +287,12 @@ fun isSameMonth(date1: Date?, date2: Date? = Date()): Boolean {
             currentCalendar1.get(Calendar.YEAR) == currentCalendar2.get(Calendar.YEAR)
 }
 
-fun getDaysDifferenceOfDates(date1: Date?, date2: Date?):Long?{
+fun getDaysDifferenceOfDates(date1: Date?, date2: Date?): Long? {
     val millionSeconds = date1?.time?.let { date2?.time?.minus(it) }
     return millionSeconds?.let { TimeUnit.MILLISECONDS.toDays(it) }
 }
 
-fun Calendar?.isWeekend():Boolean{
-    this?:return false
-    return get(Calendar.DAY_OF_WEEK)== Calendar.SATURDAY || get(Calendar.DAY_OF_WEEK)== Calendar.SUNDAY
+fun Calendar?.isWeekend(): Boolean {
+    this ?: return false
+    return get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
 }

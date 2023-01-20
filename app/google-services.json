@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "7867000034",
+    "project_id": "audio-app-12dc5",
+    "storage_bucket": "audio-app-12dc5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7867000034:android:3e129f7e78efafb83aeabb",
+        "android_client_info": {
+          "package_name": "com.techventure.salbiapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7867000034-retds1sbkpsarlcn19k4rnqe1he1hd86.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJhHyihIKhTYRW5gplP4ESsNFW1MTPcMo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7867000034-retds1sbkpsarlcn19k4rnqe1he1hd86.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

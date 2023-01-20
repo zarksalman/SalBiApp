@@ -2,6 +2,7 @@ package com.techventure.androidext.utils
 
 object ExtConstant {
 
+    const val APP_NAME = "salbi_app"
     // String Integer region
     const val ZERO = 0
     const val ONE = 1
